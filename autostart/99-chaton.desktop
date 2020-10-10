@@ -1,0 +1,11 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Chaton
+Comment=Disable keyboard and mouse with key press
+Exec=chaton
+StartupNotify=false
+Terminal=false
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
