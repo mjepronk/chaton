@@ -6,15 +6,14 @@ where
 
 import Prelude hiding (putStrLn)
 import Control.Monad (forever, void)
-import Control.Monad.State.Strict (StateT, evalStateT, get, put, liftIO)
+import Control.Monad.State.Strict (evalStateT, get, put, liftIO)
 import Data.ByteString (ByteString)
 import Data.Text (Text)
 import qualified Data.Text as T
-import Data.Text.Encoding (decodeUtf8)
 import Data.Text.IO (putStrLn)
 import Data.Time.Clock (DiffTime, secondsToDiffTime)
 import Evdev (Event(..), EventData(..), KeyEvent(..), Device, evdevDir,
-    newDevice, nextEvent, deviceName, grabDevice, ungrabDevice)
+    newDevice, nextEvent, grabDevice, ungrabDevice)
 import Evdev.Codes (Key(KeyWakeup))
 import System.Process (readProcess)
 
@@ -75,7 +74,10 @@ notify :: Text -> Text -> IO ()
 notify curr other = do
     putStrLn $ "Chaton mode " <> curr <> "."
     readProcess "/usr/bin/notify-send"
-        [ "Chaton"
+        [ "--expire-time=1000"
+        , "--urgency=low"
+        , "--hint=int:transient:1"
+        , "Chaton"
         , "Chaton mode " <> T.unpack curr <> " press Fn for 1 second to " <> T.unpack other <> "."
         ]
         []
